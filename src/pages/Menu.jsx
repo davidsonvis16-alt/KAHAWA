@@ -101,9 +101,9 @@ export default function Menu() {
               <span className="h-px flex-1 bg-bean/10" />
               <span className="hidden text-sm text-bean/50 sm:block">{g.blurb}</span>
             </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-4 lg:grid-cols-2">
               <AnimatePresence mode="popLayout">
-                {g.items.map((m, i) => <MenuCard key={m.id} item={m} onOpen={openItem} i={i} />)}
+                {g.items.map((m, i) => <MenuCard key={m.id} item={m} onOpen={openItem} i={i} row />)}
               </AnimatePresence>
             </div>
           </motion.section>
