@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-cream text-bean font-sans antialiased; overflow-x: clip; }
+  h1, h2, h3, .font-display { font-variation-settings: 'SOFT' 100, 'opsz' 96; }
+  ::selection { @apply bg-honey text-bean; }
+  input, select, textarea { @apply outline-none; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold transition active:scale-[.97] disabled:opacity-50 disabled:pointer-events-none; }
+  .btn-primary { @apply btn bg-chili text-white hover:bg-chili-600 shadow-[0_6px_0_#A93421] active:shadow-[0_2px_0_#A93421] active:translate-y-1; }
+  .btn-dark { @apply btn bg-bean text-cream hover:bg-bean-800; }
+  .btn-ghost { @apply btn bg-white/70 text-bean ring-1 ring-bean/10 hover:bg-white; }
+  .field { @apply w-full rounded-2xl bg-white px-4 py-3.5 ring-1 ring-bean/10 placeholder:text-bean/35 focus:ring-2 focus:ring-chili transition; }
+  .label { @apply mb-1.5 block text-sm font-semibold text-bean/70; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide; }
+  .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .grain { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E"); }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
