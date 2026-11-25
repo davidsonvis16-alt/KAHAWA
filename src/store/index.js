@@ -14,6 +14,8 @@ export const useCart = create(
       lines: [], // { key, id, qty, sel, comboId?, note }
       open: false,
       promo: null,
+      mode: 'delivery', // 'delivery' | 'pickup', chosen in the header, used at checkout
+      setMode: (mode) => set({ mode }),
       setOpen: (open) => set({ open }),
       add: (id, sel = {}, qty = 1, extra = {}) => {
         const key = id + '#' + optionKey(sel) + (extra.comboId ? '#' + extra.comboId : '')
@@ -35,7 +37,7 @@ export const useCart = create(
       },
       removePromo: () => set({ promo: null }),
     }),
-    { name: 'kc-cart', partialize: (s) => ({ lines: s.lines, promo: s.promo }) }
+    { name: 'kc-cart', partialize: (s) => ({ lines: s.lines, promo: s.promo, mode: s.mode }) }
   )
 )
 

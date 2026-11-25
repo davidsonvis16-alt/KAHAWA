@@ -10,11 +10,11 @@ function Shell({ title, sub, children, img }) {
   return (
     <div className="container-x grid gap-10 py-10 lg:grid-cols-2 lg:py-16">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mx-auto w-full max-w-md self-center">
-        <h1 className="font-display text-5xl font-black">{title}</h1>
+        <h1 className="font-display text-6xl">{title}</h1>
         <p className="mt-2 text-lg text-bean/60">{sub}</p>
         <div className="mt-8">{children}</div>
       </motion.div>
-      <div className="relative hidden overflow-hidden rounded-[2.5rem] bg-cream-200 lg:block">
+      <div className="relative hidden overflow-hidden rounded-3xl bg-cream-200 lg:block">
         <SmartImage src={img} alt="" className="h-full min-h-[560px] w-full object-cover" />
         <div className="absolute bottom-6 left-6 right-6 flex items-center gap-4 rounded-3xl bg-white/95 p-5 backdrop-blur">
           <Gift className="h-10 w-10 shrink-0 text-chili" />
@@ -118,9 +118,9 @@ export function ForgotPassword() {
   return (
     <Shell title="Forgot password?" sub="Enter your email and we’ll send you a link to choose a new one." img={heroImages.interior}>
       {sent ? (
-        <div className="rounded-[1.5rem] bg-white p-6 ring-1 ring-bean/5">
+        <div className="rounded-2xl bg-white p-6 ring-1 ring-bean/5">
           <MailCheck className="h-10 w-10 text-chili" />
-          <h2 className="mt-3 font-display text-2xl font-bold">Check your inbox</h2>
+          <h2 className="mt-3 font-display text-3xl">Check your inbox</h2>
           <p className="mt-1 text-bean/60">If <b className="text-bean">{email}</b> has an account, a reset link is on its way. It works once and expires in 30 minutes.</p>
         </div>
       ) : (
@@ -188,10 +188,10 @@ export function VerifyEmail() {
   }, [token, verify])
   return (
     <div className="container-x grid min-h-[60vh] place-items-center py-16">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md rounded-[2rem] bg-white p-8 text-center ring-1 ring-bean/5">
-        {state === 'busy' && <><Loader2 className="mx-auto h-10 w-10 animate-spin text-chili" /><h1 className="mt-4 font-display text-3xl font-black">Confirming…</h1></>}
-        {state === 'done' && <><CheckCircle2 className="mx-auto h-12 w-12 text-chili" /><h1 className="mt-4 font-display text-3xl font-black">Email confirmed</h1><p className="mt-2 text-bean/60">Thanks — your account is all set.</p><Link to="/account" className="btn-primary mt-6">Go to my account</Link></>}
-        {state === 'error' && <><XCircle className="mx-auto h-12 w-12 text-chili" /><h1 className="mt-4 font-display text-3xl font-black">Link didn’t work</h1><p className="mt-2 text-bean/60">{err} You can send a fresh one from your account page.</p><Link to="/account" className="btn-primary mt-6">My account</Link></>}
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md rounded-2xl bg-white p-8 text-center ring-1 ring-bean/5">
+        {state === 'busy' && <><Loader2 className="mx-auto h-10 w-10 animate-spin text-chili" /><h1 className="mt-4 font-display text-4xl">Confirming…</h1></>}
+        {state === 'done' && <><CheckCircle2 className="mx-auto h-12 w-12 text-chili" /><h1 className="mt-4 font-display text-4xl">Email confirmed</h1><p className="mt-2 text-bean/60">Thanks — your account is all set.</p><Link to="/account" className="btn-primary mt-6">Go to my account</Link></>}
+        {state === 'error' && <><XCircle className="mx-auto h-12 w-12 text-chili" /><h1 className="mt-4 font-display text-4xl">Link didn’t work</h1><p className="mt-2 text-bean/60">{err} You can send a fresh one from your account page.</p><Link to="/account" className="btn-primary mt-6">My account</Link></>}
       </motion.div>
     </div>
   )

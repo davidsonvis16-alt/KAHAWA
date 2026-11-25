@@ -43,7 +43,7 @@ export default function PaymentStrip({ className = '' }) {
       {[<MpesaLogo key="m" className="h-5" />, <VisaLogo key="v" />, <MastercardLogo key="mc" className="h-5" />,
         <AirtelLogo key="a" className="h-5" />, <PaypalLogo key="p" className="h-4" />, <ApplePayLogo key="ap" className="h-5" />,
         <GooglePayLogo key="g" className="h-5" />].map((el, i) => (
-        <span key={i} className="grid h-9 min-w-[3.25rem] place-items-center rounded-lg bg-white px-2 ring-1 ring-bean/10">{el}</span>
+        <span key={i} className="grid h-9 min-w-[3.25rem] place-items-center rounded-md bg-white px-2 ring-1 ring-bean/10">{el}</span>
       ))}
     </div>
   )

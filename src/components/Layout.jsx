@@ -11,24 +11,27 @@ import { useUI } from '../store'
 export default function Layout() {
   const { pathname } = useLocation()
   const toast = useUI((s) => s.toast)
-  useEffect(() => window.scrollTo({ top: 0, behavior: 'instant' }), [pathname])
+  // Braces matter: newer browsers return a Promise from scrollTo, and React would
+  // treat a returned value as the effect's cleanup function and crash calling it.
+  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }) }, [pathname])
   return (
     <div className="flex min-h-screen flex-col overflow-x-clip">
       <Navbar />
-      <AnimatePresence mode="wait">
-        <motion.main key={pathname} className="flex-1" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-          <Outlet />
-        </motion.main>
-      </AnimatePresence>
+      <main className="flex-1">
+        <Outlet />
+      </main>
       <Footer />
       <CartDrawer />
       <ItemModal />
       <AnimatePresence>
         {toast && (
-          <motion.div key={toast.id} initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 40, opacity: 0 }}
-            className="fixed bottom-6 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2 rounded-full bg-bean px-5 py-3 font-semibold text-cream shadow-lift" role="status">
-            <CheckCircle2 className="h-5 w-5 text-honey" /> {toast.msg}
-          </motion.div>
+          // Centred by the wrapper, not a translate: framer-motion owns `transform` on the toast.
+          <div key={toast.id} className="pointer-events-none fixed inset-x-0 top-3 z-[60] flex justify-center px-3">
+            <motion.div initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -40, opacity: 0 }}
+              className="flex max-w-full items-center gap-2 rounded-xl bg-bean px-5 py-3 font-semibold text-white shadow-lift" role="status">
+              <CheckCircle2 className="h-5 w-5 shrink-0 text-honey" /> {toast.msg}
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>
