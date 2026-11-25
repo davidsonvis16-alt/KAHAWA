@@ -16,7 +16,7 @@ export default function Order() {
 
   if (!order) return (
     <div className="container-x py-28 text-center">
-      <h1 className="font-display text-4xl font-black">Order not found</h1>
+      <h1 className="font-display text-5xl">Order not found</h1>
       <Link to="/menu" className="btn-primary mt-6">Back to menu</Link>
     </div>
   )
@@ -32,11 +32,11 @@ export default function Order() {
 
   return (
     <div className="container-x pt-10">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grain overflow-hidden rounded-[2.5rem] bg-bean p-8 text-cream sm:p-12">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grain overflow-hidden rounded-3xl bg-bean p-8 text-cream sm:p-12">
         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', delay: 0.2 }} className="grid h-16 w-16 place-items-center rounded-full bg-leaf">
           <Check className="h-9 w-9" strokeWidth={3} />
         </motion.div>
-        <h1 className="mt-5 font-display text-4xl font-black sm:text-6xl">Asante, {order.contact.name.split(' ')[0]}!</h1>
+        <h1 className="mt-5 font-display text-5xl sm:text-6xl">Asante, {order.contact.name.split(' ')[0]}!</h1>
         <p className="mt-2 text-lg text-cream/70">Order <b className="text-honey">{order.id}</b> · {pickup ? `Pickup at ${branch?.name}` : 'Delivery'} · {order.when}</p>
 
         <ol className="relative mt-10 grid gap-6" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}>
@@ -56,8 +56,8 @@ export default function Order() {
       </motion.div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_380px]">
-        <div className="rounded-[2rem] bg-white p-6 ring-1 ring-bean/5 sm:p-8">
-          <h2 className="font-display text-2xl font-black">Your order</h2>
+        <div className="rounded-2xl bg-white p-6 ring-1 ring-bean/5 sm:p-8">
+          <h2 className="font-display text-3xl">Your order</h2>
           <ul className="mt-4 divide-y divide-bean/10">
             {order.lines.map((l, i) => { const item = byId[l.id]; if (!item) return null; return (
               <li key={i} className="flex justify-between gap-4 py-3">
@@ -67,8 +67,8 @@ export default function Order() {
           </ul>
           {order.address && <p className="mt-4 rounded-2xl bg-cream p-4 text-sm"><b>Delivering to:</b> {order.address.line}{order.address.notes && ` — ${order.address.notes}`}</p>}
         </div>
-        <div className="h-max rounded-[2rem] bg-white p-6 ring-1 ring-bean/5">
-          <h2 className="font-display text-2xl font-black">Receipt</h2>
+        <div className="h-max rounded-2xl bg-white p-6 ring-1 ring-bean/5">
+          <h2 className="font-display text-3xl">Receipt</h2>
           <dl className="mt-4 space-y-1.5">
             <div className="flex justify-between"><dt className="text-bean/60">Subtotal</dt><dd>{ksh(order.totals.subtotal)}</dd></div>
             {order.totals.discount > 0 && <div className="flex justify-between text-leaf"><dt>Promo</dt><dd>−{ksh(order.totals.discount)}</dd></div>}

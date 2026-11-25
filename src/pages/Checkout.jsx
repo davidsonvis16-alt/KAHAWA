@@ -31,8 +31,8 @@ const validPhone = (p) => /^0[17]\d{8}$/.test(normPhone(p))
 
 function Section({ n, title, children }) {
   return (
-    <section className="rounded-[2rem] bg-white p-6 ring-1 ring-bean/5 sm:p-8">
-      <h2 className="flex items-center gap-3 font-display text-2xl font-black">
+    <section className="rounded-2xl bg-white p-6 ring-1 ring-bean/5 sm:p-8">
+      <h2 className="flex items-center gap-3 font-display text-3xl">
         <span className="grid h-9 w-9 place-items-center rounded-full bg-bean text-base text-cream">{n}</span>{title}
       </h2>
       <div className="mt-6">{children}</div>
@@ -46,7 +46,8 @@ export default function Checkout() {
   const place = useOrders((s) => s.place)
   const nav = useNavigate()
 
-  const [mode, setMode] = useState('delivery')
+  const mode = useCart((s) => s.mode)
+  const setMode = useCart((s) => s.setMode)
   const [branch, setBranch] = useState(locations[0].id)
   const [when, setWhen] = useState('asap')
   const [slot, setSlot] = useState('')
@@ -76,7 +77,7 @@ export default function Checkout() {
   if (lines.length === 0 && stage !== 'done') {
     return (
       <div className="container-x py-28 text-center">
-        <h1 className="font-display text-5xl font-black">Your bag is empty</h1>
+        <h1 className="font-display text-6xl">Your bag is empty</h1>
         <p className="mt-2 text-bean/60">Add something delicious first.</p>
         <Link to="/menu" className="btn-primary mt-8">Go to the menu</Link>
       </div>
@@ -126,7 +127,7 @@ export default function Checkout() {
   return (
     <div className="container-x pt-10" id="checkout-top">
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="font-display text-5xl font-black">Checkout</h1>
+        <h1 className="font-display text-6xl">Checkout</h1>
         {TEST_MODE && <span className="chip bg-honey/30 text-bean">Test mode · no real charges</span>}
       </div>
       {!user && <p className="mt-2 text-bean/60">Checking out as a guest. <Link to="/login?next=/checkout" className="font-bold text-chili">Sign in</Link> to earn Crumbs on this order.</p>}
@@ -136,7 +137,7 @@ export default function Checkout() {
           <Section n="1" title="How do you want it?">
             <div className="grid grid-cols-2 gap-3">
               {[{ id: 'delivery', label: 'Delivery', sub: '25–35 min', Icon: Bike }, { id: 'pickup', label: 'Pickup', sub: 'Ready in ~15 min', Icon: Store }].map((o) => (
-                <button key={o.id} onClick={() => setMode(o.id)} className={`relative flex items-center gap-3 rounded-2xl p-4 text-left ring-1 transition ${mode === o.id ? 'bg-cream ring-2 ring-chili' : 'ring-bean/10 hover:bg-cream/50'}`}>
+                <button key={o.id} onClick={() => setMode(o.id)} className={`relative flex items-center gap-3 rounded-2xl p-4 text-left ring-1 transition ${mode === o.id ? 'bg-cream ring-2 ring-bean' : 'ring-bean/10 hover:bg-cream/50'}`}>
                   <o.Icon className={`h-7 w-7 ${mode === o.id ? 'text-chili' : 'text-bean/50'}`} />
                   <div><div className="font-bold">{o.label}</div><div className="text-sm text-bean/55">{o.sub}</div></div>
                 </button>
@@ -148,7 +149,7 @@ export default function Checkout() {
                   {user?.addresses?.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {user.addresses.map((a, i) => (
-                        <button key={i} onClick={() => setAddress({ ...address, line: a.line })} className={`chip py-1.5 normal-case tracking-normal text-sm ${address.line === a.line ? 'bg-bean text-cream' : 'bg-cream-200'}`}>{a.label}</button>
+                        <button key={i} onClick={() => setAddress({ ...address, line: a.line })} className={`chip py-1.5 normal-case tracking-normal text-sm ${address.line === a.line ? 'bg-bean text-white' : 'bg-cream-200'}`}>{a.label}</button>
                       ))}
                     </div>
                   )}
@@ -166,8 +167,8 @@ export default function Checkout() {
             </AnimatePresence>
             <div className="mt-5 flex flex-wrap items-center gap-2">
               <Clock className="h-5 w-5 text-bean/50" />
-              <button onClick={() => setWhen('asap')} className={`chip py-2 normal-case tracking-normal text-sm ${when === 'asap' ? 'bg-bean text-cream' : 'bg-cream-200'}`}>As soon as possible</button>
-              <button onClick={() => setWhen('later')} className={`chip py-2 normal-case tracking-normal text-sm ${when === 'later' ? 'bg-bean text-cream' : 'bg-cream-200'}`}>Schedule for later</button>
+              <button onClick={() => setWhen('asap')} className={`chip py-2 normal-case tracking-normal text-sm ${when === 'asap' ? 'bg-bean text-white' : 'bg-cream-200'}`}>As soon as possible</button>
+              <button onClick={() => setWhen('later')} className={`chip py-2 normal-case tracking-normal text-sm ${when === 'later' ? 'bg-bean text-white' : 'bg-cream-200'}`}>Schedule for later</button>
               {when === 'later' && (
                 <select value={slot} onChange={(e) => setSlot(e.target.value)} className="field w-auto bg-cream py-2"><option value="">Choose a time</option>{slots.map((s) => <option key={s}>{s}</option>)}</select>
               )}
@@ -188,7 +189,7 @@ export default function Checkout() {
               {methods.map((m) => {
                 const on = method === m.id
                 return (
-                  <div key={m.id} className={`overflow-hidden rounded-2xl ring-1 transition ${on ? 'bg-cream ring-2 ring-chili' : 'ring-bean/10'}`}>
+                  <div key={m.id} className={`overflow-hidden rounded-2xl ring-1 transition ${on ? 'bg-cream ring-2 ring-bean' : 'ring-bean/10'}`}>
                     <button role="radio" aria-checked={on} onClick={() => setMethod(m.id)} className="flex w-full items-center gap-4 p-4 text-left">
                       <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-full ${on ? 'bg-chili text-white' : 'ring-2 ring-bean/20'}`}>{on && <Check className="h-4 w-4" strokeWidth={3} />}</span>
                       <div className="min-w-0 flex-1"><div className="font-bold">{m.name}</div><div className="text-sm text-bean/55">{m.sub}</div></div>
@@ -235,8 +236,8 @@ export default function Checkout() {
 
         {/* ---------------- SUMMARY ---------------- */}
         <aside className="space-y-4 lg:sticky lg:top-24">
-          <div className="rounded-[2rem] bg-white p-6 ring-1 ring-bean/5">
-            <h2 className="font-display text-2xl font-black">Order summary</h2>
+          <div className="rounded-2xl bg-white p-6 ring-1 ring-bean/5">
+            <h2 className="font-display text-3xl">Order summary</h2>
             <ul className="mt-4 max-h-72 space-y-3 overflow-y-auto pr-1">
               {lines.map((l) => { const item = byId[l.id]; if (!item) return null; return (
                 <li key={l.key} className="flex gap-3">
@@ -275,20 +276,20 @@ export default function Checkout() {
       <AnimatePresence>
         {(stage === 'push' || stage === 'processing') && (
           <motion.div className="fixed inset-0 z-[70] grid place-items-center bg-bean/70 p-4 backdrop-blur" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="w-full max-w-sm rounded-[2rem] bg-cream p-8 text-center">
+            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="w-full max-w-sm rounded-2xl bg-cream p-8 text-center">
               {stage === 'push' ? (
                 <>
                   <div className="mx-auto flex h-16 items-center justify-center">{method === 'mpesa' ? <MpesaLogo className="h-12" /> : <AirtelLogo className="h-12" />}</div>
                   <motion.div animate={{ rotate: [-8, 8, -8] }} transition={{ repeat: Infinity, duration: 0.5 }} className="mx-auto mt-6 grid h-20 w-14 place-items-center rounded-2xl border-4 border-bean">
                     <span className="h-1.5 w-6 rounded-full bg-chili" />
                   </motion.div>
-                  <h3 className="mt-6 font-display text-2xl font-black">Check your phone</h3>
+                  <h3 className="mt-6 font-display text-3xl">Check your phone</h3>
                   <p className="mt-2 text-bean/65">We’ve sent a payment request of <b>{ksh(total)}</b> to <b>{normPhone(payPhone)}</b>. Enter your PIN to confirm.</p>
                 </>
               ) : (
                 <>
                   <Loader2 className="mx-auto h-14 w-14 animate-spin text-chili" />
-                  <h3 className="mt-6 font-display text-2xl font-black">Processing payment</h3>
+                  <h3 className="mt-6 font-display text-3xl">Processing payment</h3>
                   <p className="mt-2 text-bean/65">Hang tight — this only takes a moment.</p>
                 </>
               )}
